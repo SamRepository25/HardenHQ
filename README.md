@@ -1,4 +1,4 @@
-# 🛡️ WebShield
+# 🛡️ HardenHQ
 
 A modern website security analyzer that evaluates common web security practices, HTTP security headers, HTTPS configuration, cookies, redirects, and server exposure to provide an easy-to-understand security score with actionable recommendations.
 
@@ -8,9 +8,9 @@ A modern website security analyzer that evaluates common web security practices,
 
 ## 🌐 Production
 
-WebShield is deployed at:
+HardenHQ is deployed at:
 
-https://webshield-zpv1.onrender.com
+https://hardenhq.onrender.com
 
 The optional FastAPI backend is deployed separately through `render.yaml`.
 
@@ -89,8 +89,8 @@ public/
 ### Clone the repository
 
 ```bash
-git clone https://github.com/SamRepository25/WebShield.git
-cd WebShield
+git clone https://github.com/SamRepository25/HardenHQ.git
+cd HardenHQ
 ```
 
 ### Install dependencies
@@ -129,7 +129,7 @@ The production start command enables the SSRF egress guard automatically.
 
 ---
 
-## 🎯 What WebShield Checks
+## 🎯 What HardenHQ Checks
 
 - HTTPS Availability
 - TLS certificate information
