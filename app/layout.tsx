@@ -7,15 +7,15 @@ import { Toaster } from '@/components/ui/toaster';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://webshield.app'),
+  metadataBase: new URL('https://hardenhq.onrender.com'),
   title: {
-    default: 'WebShield — Website Security Scanner',
-    template: '%s | WebShield',
+    default: 'HardenHQ — Website Security Analyzer',
+    template: '%s | HardenHQ',
   },
   description:
-    'Scan any website for security vulnerabilities, HTTPS status, security headers, and get actionable recommendations. Free, instant, no signup required.',
+    'Analyze websites for security vulnerabilities, HTTPS status, security headers, and get actionable recommendations. Free, instant, no signup required.',
   keywords: [
-    'website security scanner',
+    'website security analyzer',
     'security headers check',
     'HTTPS checker',
     'SSL certificate checker',
@@ -24,22 +24,22 @@ export const metadata: Metadata = {
     'vulnerability scanner',
     'web security audit',
   ],
-  authors: [{ name: 'WebShield' }],
-  creator: 'WebShield',
+  authors: [{ name: 'HardenHQ' }],
+  creator: 'HardenHQ',
   themeColor: '#0a0e1a',
   openGraph: {
-    title: 'WebShield — Website Security Scanner',
+    title: 'HardenHQ — Website Security Analyzer',
     description:
-      'Scan any website for security vulnerabilities, HTTPS status, security headers, and get actionable recommendations.',
+      'Analyze websites for security vulnerabilities, HTTPS status, security headers, and get actionable recommendations.',
     type: 'website',
-    siteName: 'WebShield',
-    url: 'https://webshield-zpv1.onrender.com/',
+    siteName: 'HardenHQ',
+    url: 'https://hardenhq.onrender.com/',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WebShield — Website Security Scanner',
+    title: 'HardenHQ — Website Security Analyzer',
     description:
-      'Scan any website for security vulnerabilities, HTTPS status, security headers, and get actionable recommendations.',
+      'Analyze websites for security vulnerabilities, HTTPS status, security headers, and get actionable recommendations.',
   },
   robots: {
     index: true,
@@ -50,9 +50,9 @@ export const metadata: Metadata = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'WebShield',
+  name: 'HardenHQ',
   description:
-    'Website security scanner that analyzes HTTPS, security headers, SSL certificates, and vulnerabilities.',
+    'Website security analyzer that analyzes HTTPS, security headers, SSL certificates, and vulnerabilities.',
   applicationCategory: 'SecurityApplication',
   operatingSystem: 'Web',
   offers: {
@@ -60,7 +60,7 @@ const jsonLd = {
     price: '0',
     priceCurrency: 'USD',
   },
-  url: 'https://webshield.app',
+  url: 'https://hardenhq.onrender.com',
 };
 
 export default function RootLayout({
