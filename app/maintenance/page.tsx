@@ -9,7 +9,7 @@ export default function MaintenancePage() {
         </div>
 
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-blue-400">
-          WebShield
+          HardenHQ
         </p>
 
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
@@ -17,7 +17,7 @@ export default function MaintenancePage() {
         </h1>
 
         <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-400 sm:text-lg">
-          WebShield is temporarily unavailable while we perform maintenance and
+          HardenHQ is temporarily unavailable while we perform maintenance and
           security improvements. Your security is our priority.
         </p>
 
