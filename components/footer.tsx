@@ -35,7 +35,7 @@ export function Footer() {
                 <Shield className="h-5 w-5 text-primary" />
               </div>
               <span className="text-lg font-bold tracking-tight">
-                Web<span className="text-gradient">Shield</span>
+                Harden<span className="text-gradient">HQ</span>
               </span>
             </Link>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
@@ -99,7 +99,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            &copy; 2026 WebShield. All rights reserved.
+            &copy; 2026 HardenHQ. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground">
             Built with security in mind. Powered by real-time header analysis.
