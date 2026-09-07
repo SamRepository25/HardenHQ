@@ -67,6 +67,13 @@ export function middleware(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.next(nextInit), nonce);
   }
 
+  if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
+    const origin = request.headers.get('origin');
+    if (origin && origin !== request.nextUrl.origin) {
+      return withSecurityHeaders(NextResponse.json({ detail: 'Cross-origin requests are not allowed.' }, { status: 403 }), nonce);
+    }
+  }
+
   const username = process.env.ADMIN_USERNAME;
   const password = process.env.ADMIN_PASSWORD;
 
