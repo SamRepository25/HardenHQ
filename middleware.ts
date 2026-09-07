@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-function constantTimeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let result = 0;
-  for (let i = 0; i < a.length; i += 1) result |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return result === 0;
-}
+import { AUTH_COOKIE, isValidSessionToken } from '@/lib/auth';
 
 function isProtectedPath(pathname: string): boolean {
   return (
@@ -21,6 +15,10 @@ function isProtectedPath(pathname: string): boolean {
     pathname === '/api/sites' ||
     pathname.startsWith('/api/sites/')
   );
+}
+
+function isAuthRoute(pathname: string): boolean {
+  return pathname === '/auth' || pathname === '/api/auth/login' || pathname === '/api/auth/logout';
 }
 
 export function buildCsp(nonce: string): string {
@@ -63,7 +61,7 @@ export function middleware(request: NextRequest): NextResponse {
     return withSecurityHeaders(NextResponse.rewrite(new URL('/maintenance', request.url), nextInit), nonce);
   }
 
-  if (!isProtectedPath(pathname)) {
+  if (isAuthRoute(pathname) || !isProtectedPath(pathname)) {
     return withSecurityHeaders(NextResponse.next(nextInit), nonce);
   }
 
@@ -74,43 +72,17 @@ export function middleware(request: NextRequest): NextResponse {
     }
   }
 
-  const username = process.env.ADMIN_USERNAME;
-  const password = process.env.ADMIN_PASSWORD;
-
-  if (!username || !password) {
-    return withSecurityHeaders(NextResponse.json({ detail: 'Admin access is not configured.' }, { status: 503 }), nonce);
+  if (isValidSessionToken(request.cookies.get(AUTH_COOKIE)?.value)) {
+    return withSecurityHeaders(NextResponse.next(nextInit), nonce);
   }
 
-  const authorization = request.headers.get('authorization');
-  if (!authorization?.startsWith('Basic ')) {
-    return withSecurityHeaders(new NextResponse('Authentication required.', {
-      status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="HardenHQ Admin", charset="UTF-8"' },
-    }), nonce);
+  if (pathname.startsWith('/api/')) {
+    return withSecurityHeaders(NextResponse.json({ detail: 'Authentication required.' }, { status: 401 }), nonce);
   }
 
-  let decoded = '';
-  try {
-    decoded = atob(authorization.slice(6));
-  } catch {
-    return withSecurityHeaders(new NextResponse('Invalid authentication.', {
-      status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="HardenHQ Admin"' },
-    }), nonce);
-  }
-
-  const separator = decoded.indexOf(':');
-  const providedUsername = separator >= 0 ? decoded.slice(0, separator) : '';
-  const providedPassword = separator >= 0 ? decoded.slice(separator + 1) : '';
-
-  if (!constantTimeEqual(providedUsername, username) || !constantTimeEqual(providedPassword, password)) {
-    return withSecurityHeaders(new NextResponse('Invalid credentials.', {
-      status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="HardenHQ Admin", charset="UTF-8"' },
-    }), nonce);
-  }
-
-  return withSecurityHeaders(NextResponse.next(nextInit), nonce);
+  const loginUrl = new URL('/auth', request.url);
+  loginUrl.searchParams.set('next', `${pathname}${request.nextUrl.search}`);
+  return withSecurityHeaders(NextResponse.redirect(loginUrl), nonce);
 }
 
 export const config = {
