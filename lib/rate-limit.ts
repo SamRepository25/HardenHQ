@@ -2,7 +2,6 @@ import { Redis } from '@upstash/redis';
 
 const WINDOW_SECONDS = 60;
 const LIMIT = 20;
-
 const memory = new Map<string, { count: number; resetAt: number }>();
 
 function getRedis(): Redis | null {
@@ -13,10 +12,15 @@ function getRedis(): Redis | null {
   });
 }
 
-export async function checkRateLimit(identifier: string): Promise<{ allowed: boolean; retryAfter: number }> {
+export async function checkRateLimit(
+  identifier: string,
+  scope = 'scan'
+): Promise<{ allowed: boolean; retryAfter: number }> {
+  const keyId = `${scope}:${identifier}`;
   const redis = getRedis();
+
   if (redis) {
-    const key = `hardenhq:scan:${identifier}`;
+    const key = `hardenhq:${scope}:${identifier}`;
     const count = await redis.incr(key);
     if (count === 1) await redis.expire(key, WINDOW_SECONDS);
     return {
@@ -30,9 +34,9 @@ export async function checkRateLimit(identifier: string): Promise<{ allowed: boo
   }
 
   const now = Date.now();
-  const current = memory.get(identifier);
+  const current = memory.get(keyId);
   if (!current || current.resetAt <= now) {
-    memory.set(identifier, { count: 1, resetAt: now + WINDOW_SECONDS * 1000 });
+    memory.set(keyId, { count: 1, resetAt: now + WINDOW_SECONDS * 1000 });
     return { allowed: true, retryAfter: 0 };
   }
 
