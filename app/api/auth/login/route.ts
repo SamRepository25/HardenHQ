@@ -20,7 +20,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    const limit = await checkRateLimit(`login:${clientIdentifier(request)}`);
+    const limit = await checkRateLimit(clientIdentifier(request), 'login');
     if (!limit.allowed) {
       return NextResponse.json(
         { detail: 'Too many login attempts. Please try again later.' },
