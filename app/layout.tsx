@@ -33,7 +33,7 @@ export const metadata: Metadata = {
       'Analyze websites for security vulnerabilities, HTTPS status, security headers, and get actionable recommendations.',
     type: 'website',
     siteName: 'HardenHQ',
-    url: 'https://hardenhq.onrender.com/',
+    url: 'https://hardenhq.onrender.com',
   },
   twitter: {
     card: 'summary_large_image',
