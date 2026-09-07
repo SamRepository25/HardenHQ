@@ -24,10 +24,6 @@ function isProtectedPath(pathname: string): boolean {
 }
 
 export function buildCsp(nonce: string): string {
-  // script-src uses a per-request nonce instead of 'unsafe-inline'/
-  // 'unsafe-eval'. 'strict-dynamic' is additive for browsers that support
-  // it; browsers that don't simply ignore that token and fall back to
-  // 'self' + the nonce, so this doesn't narrow anything for older clients.
   return [
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
@@ -49,10 +45,6 @@ function withSecurityHeaders(response: NextResponse, nonce: string): NextRespons
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   response.headers.set('Cross-Origin-Opener-Policy', 'same-origin');
-  // 'credentialless' (rather than 'require-corp') so cross-origin resources
-  // that don't send a CORP header still load — this page has no reason to
-  // send credentials to third-party origins, so the tighter isolation
-  // benefit still applies without the risk of breaking image/font loads.
   response.headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
   response.headers.set('Cross-Origin-Resource-Policy', 'same-origin');
   response.headers.set('Cache-Control', 'no-store');
@@ -86,7 +78,7 @@ export function middleware(request: NextRequest): NextResponse {
   if (!authorization?.startsWith('Basic ')) {
     return withSecurityHeaders(new NextResponse('Authentication required.', {
       status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="WebShield Admin", charset="UTF-8"' },
+      headers: { 'WWW-Authenticate': 'Basic realm="HardenHQ Admin", charset="UTF-8"' },
     }), nonce);
   }
 
@@ -96,7 +88,7 @@ export function middleware(request: NextRequest): NextResponse {
   } catch {
     return withSecurityHeaders(new NextResponse('Invalid authentication.', {
       status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="WebShield Admin"' },
+      headers: { 'WWW-Authenticate': 'Basic realm="HardenHQ Admin"' },
     }), nonce);
   }
 
@@ -107,7 +99,7 @@ export function middleware(request: NextRequest): NextResponse {
   if (!constantTimeEqual(providedUsername, username) || !constantTimeEqual(providedPassword, password)) {
     return withSecurityHeaders(new NextResponse('Invalid credentials.', {
       status: 401,
-      headers: { 'WWW-Authenticate': 'Basic realm="WebShield Admin", charset="UTF-8"' },
+      headers: { 'WWW-Authenticate': 'Basic realm="HardenHQ Admin", charset="UTF-8"' },
     }), nonce);
   }
 
