@@ -59,7 +59,7 @@ export function middleware(request: NextRequest): NextResponse {
   const nextInit = { request: { headers: requestHeaders } };
   const pathname = request.nextUrl.pathname;
 
-  if (process.env.MAINTENANCE_MODE === 'true' && pathname !== '/maintenance' && !isProtectedPath(pathname)) {
+  if (process.env.MAINTENANCE_MODE === 'true' && pathname !== '/maintenance' && pathname !== '/api/health' && !isProtectedPath(pathname)) {
     return withSecurityHeaders(NextResponse.rewrite(new URL('/maintenance', request.url), nextInit), nonce);
   }
 
