@@ -49,12 +49,12 @@ function addHeader(doc: jsPDF, pageWidth: number) {
   doc.setFontSize(18);
   doc.setTextColor(255, 255, 255);
   const brandX = 37;
-  const webText = 'Web';
-  const shieldText = 'Shield';
-  doc.text(webText, brandX, 18);
-  const shieldX = brandX + doc.getTextWidth(webText) + 0.8;
+  const hardenText = 'Harden';
+  const hqText = 'HQ';
+  doc.text(hardenText, brandX, 18);
+  const hqX = brandX + doc.getTextWidth(hardenText) + 0.8;
   doc.setTextColor(14, 165, 233);
-  doc.text(shieldText, shieldX, 18);
+  doc.text(hqText, hqX, 18);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
@@ -69,7 +69,7 @@ function addFooter(doc: jsPDF, pageWidth: number, pageHeight: number) {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.setTextColor(105, 115, 125);
-  doc.text('© 2026 WebShield • Website Security Report', 15, pageHeight - 9);
+  doc.text('© 2026 HardenHQ • Website Security Report', 15, pageHeight - 9);
   doc.text(`Page ${doc.getNumberOfPages()}`, pageWidth - 15, pageHeight - 9, { align: 'right' });
 }
 
@@ -109,7 +109,7 @@ export function exportPdfReport(result: ScanResult): void {
     format: 'a4',
     encryption: {
       userPassword: '',
-      ownerPassword: `webshield-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      ownerPassword: `hardenhq-${Date.now()}-${Math.random().toString(36).slice(2)}`,
       userPermissions: ['print'],
     },
   } as any);
@@ -294,7 +294,7 @@ export function copyResults(result: ScanResult): Promise<void> {
 
 export function formatResultsForSharing(result: ScanResult): string {
   const lines: string[] = [];
-  lines.push('WebShield Security Scan Results');
+  lines.push('HardenHQ Security Scan Results');
   lines.push('');
   lines.push(`URL: ${result.url}`);
   if (result.finalUrl !== result.url) {
@@ -317,7 +317,7 @@ export function formatResultsForSharing(result: ScanResult): string {
     }
   }
   lines.push('');
-  lines.push('Scanned with WebShield');
+  lines.push('Scanned with HardenHQ');
   return lines.join('\n');
 }
 
@@ -326,7 +326,7 @@ export async function shareResults(result: ScanResult): Promise<boolean> {
   if (navigator.share) {
     try {
       await navigator.share({
-        title: 'WebShield Security Scan',
+        title: 'HardenHQ Security Scan',
         text,
       });
       return true;
