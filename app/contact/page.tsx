@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 
 export const metadata = {
   title: 'Contact',
-  description: 'Contact WebShield for questions, feedback, and security reports.',
+  description: 'Contact HardenHQ for questions, feedback, and security reports.',
 };
 
 export default function ContactPage() {
@@ -19,9 +19,9 @@ export default function ContactPage() {
               <MessageSquare className="h-7 w-7 text-primary" aria-hidden="true" />
             </div>
             <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-primary">Contact</p>
-            <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-6xl">Let&apos;s talk about WebShield.</h1>
+            <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-6xl">Let&apos;s talk about HardenHQ.</h1>
             <p className="mt-6 text-base leading-8 text-muted-foreground sm:text-lg">
-              Have feedback, found a bug, or want to discuss the project? The best place to reach the WebShield project is through GitHub, where issues and suggestions can be tracked openly.
+              Have feedback, found a bug, or want to discuss the project? The best place to reach the HardenHQ project is through GitHub, where issues and suggestions can be tracked openly.
             </p>
           </div>
 
@@ -33,10 +33,10 @@ export default function ContactPage() {
               <div>
                 <h2 className="text-xl font-semibold">GitHub</h2>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  Open the WebShield repository to report bugs, suggest improvements, or review the project.
+                  Open the HardenHQ repository to report bugs, suggest improvements, or review the project.
                 </p>
                 <Button asChild className="mt-5 gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
-                  <a href="https://github.com/SamRepository25/WebShield" target="_blank" rel="noreferrer">
+                  <a href="https://github.com/SamRepository25/HardenHQ" target="_blank" rel="noreferrer">
                     Open GitHub Repository
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </a>
@@ -60,7 +60,7 @@ export default function ContactPage() {
 
           <div className="mt-10 text-center">
             <Button asChild variant="outline">
-              <Link href="/">Back to WebShield</Link>
+              <Link href="/">Back to HardenHQ</Link>
             </Button>
           </div>
         </div>
