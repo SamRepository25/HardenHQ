@@ -7,6 +7,9 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 25;
 
+const MAX_BODY_BYTES = 8192;
+const MAX_URL_LENGTH = 2048;
+
 function getClientIdentifier(request: NextRequest): string {
   return (
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
@@ -16,6 +19,11 @@ function getClientIdentifier(request: NextRequest): string {
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  const contentLength = Number(request.headers.get('content-length') || 0);
+  if (contentLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ detail: 'Request body is too large.' }, { status: 413 });
+  }
+
   const identifier = getClientIdentifier(request);
   try {
     const limit = await checkRateLimit(identifier);
@@ -45,6 +53,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   if (!body || typeof body !== 'object' || !('url' in body) || typeof body.url !== 'string') {
     return NextResponse.json({ detail: 'URL is required.' }, { status: 400 });
+  }
+
+  if (body.url.length > MAX_URL_LENGTH) {
+    return NextResponse.json({ detail: 'URL is too long.' }, { status: 400 });
   }
 
   try {
