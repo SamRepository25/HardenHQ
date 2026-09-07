@@ -107,11 +107,10 @@ export function Navbar({ onNavigate }: NavbarProps) {
         className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
         aria-label="Main navigation"
       >
-        {/* Logo */}
         <Link
           href="/"
           className="flex items-center gap-2.5"
-          aria-label="WebShield home"
+          aria-label="HardenHQ home"
         >
           <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 ring-1 ring-primary/30">
             <Shield
@@ -126,11 +125,10 @@ export function Navbar({ onNavigate }: NavbarProps) {
           </div>
 
           <span className="text-lg font-bold tracking-tight">
-            Web<span className="text-gradient">Shield</span>
+            Harden<span className="text-gradient">HQ</span>
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) =>
             link.href.startsWith('/') ? (
@@ -156,7 +154,6 @@ export function Navbar({ onNavigate }: NavbarProps) {
           )}
         </div>
 
-        {/* Desktop Button */}
         <div className="hidden items-center gap-3 md:flex">
           <Button
             size="sm"
@@ -169,7 +166,6 @@ export function Navbar({ onNavigate }: NavbarProps) {
           </Button>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -184,7 +180,6 @@ export function Navbar({ onNavigate }: NavbarProps) {
         </button>
       </nav>
 
-      {/* Mobile Navigation */}
       {mobileOpen && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
