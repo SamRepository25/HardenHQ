@@ -29,10 +29,6 @@ export async function checkRateLimit(
     };
   }
 
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error('Distributed rate limiting is not configured.');
-  }
-
   const now = Date.now();
   const current = memory.get(keyId);
   if (!current || current.resetAt <= now) {
