@@ -7,11 +7,12 @@ function secureEqual(a: string, b: string): boolean {
 }
 
 export function hasInternalApiAccess(headers: Headers): boolean {
-  const secret = process.env.WEBSHIELD_INTERNAL_API_SECRET;
+  const secret = process.env.HARDENHQ_INTERNAL_API_SECRET || process.env.WEBSHIELD_INTERNAL_API_SECRET;
   if (!secret) return false;
 
   const bearer = headers.get('authorization');
   const provided =
+    headers.get('x-hardenhq-secret') ||
     headers.get('x-webshield-secret') ||
     (bearer?.startsWith('Bearer ') ? bearer.slice(7) : '');
 
