@@ -23,7 +23,7 @@ function sanitizeHostname(url: string): string {
 
 export function exportJson(result: ScanResult): void {
   const json = JSON.stringify(result, null, 2);
-  const filename = `webshield-${sanitizeHostname(result.url)}-${Date.now()}.json`;
+  const filename = `hardenhq-${sanitizeHostname(result.url)}-${Date.now()}.json`;
   downloadFile(json, filename, 'application/json');
 }
 
@@ -283,7 +283,7 @@ export function exportPdfReport(result: ScanResult): void {
   }
 
   addFooter(doc, pageWidth, pageHeight);
-  const filename = `webshield-${sanitizeHostname(result.url)}-${Date.now()}.pdf`;
+  const filename = `hardenhq-${sanitizeHostname(result.url)}-${Date.now()}.pdf`;
   doc.save(filename);
 }
 
