@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: webshield-api
+    name: hardenhq-api
     runtime: python
     rootDir: backend
     plan: free
@@ -13,7 +13,7 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: FRONTEND_ORIGIN
-        value: https://webshield-zpv1.onrender.com
+        value: https://hardenhq.onrender.com
       - key: UPSTASH_REDIS_REST_URL
         sync: false
       - key: UPSTASH_REDIS_REST_TOKEN
