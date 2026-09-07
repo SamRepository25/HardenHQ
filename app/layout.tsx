@@ -1,5 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
+import { connection } from 'next/server';
 import { Inter } from 'next/font/google';
 import { Providers } from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
@@ -63,16 +65,20 @@ const jsonLd = {
   url: 'https://hardenhq.onrender.com',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  await connection();
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
+
   return (
     <html lang="en" className="dark">
       <head>
         <script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
