@@ -38,8 +38,9 @@ The production scanner includes:
 - SSRF protection for private, loopback, metadata, reserved, and internal network targets
 - Redirect-by-redirect target validation
 - Process-level DNS egress protection for server-side HTTP requests
-- Distributed scan rate limiting with Upstash Redis
-- Basic Authentication for dashboard, monitoring, and scan-history APIs
+- Distributed rate limiting with Upstash Redis
+- Signed, HttpOnly admin session cookies
+- Same-origin protection for authenticated state-changing requests
 - Secure response headers
 - Restricted FastAPI CORS policy
 
