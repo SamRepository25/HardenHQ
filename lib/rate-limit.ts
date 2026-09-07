@@ -16,7 +16,7 @@ function getRedis(): Redis | null {
 export async function checkRateLimit(identifier: string): Promise<{ allowed: boolean; retryAfter: number }> {
   const redis = getRedis();
   if (redis) {
-    const key = `webshield:scan:${identifier}`;
+    const key = `hardenhq:scan:${identifier}`;
     const count = await redis.incr(key);
     if (count === 1) await redis.expire(key, WINDOW_SECONDS);
     return {
