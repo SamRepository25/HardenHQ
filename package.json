@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "node -r ./lib/fetch-guard.cjs node_modules/next/dist/bin/next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
@@ -28,7 +28,7 @@
     "@radix-ui/react-popover": "^1.1.1",
     "@radix-ui/react-progress": "^1.1.1",
     "@radix-ui/react-radio-group": "^1.1.1",
-    "@radix-ui/react-scroll-area": "^1.1.1",
+    "@radix-ui/react-resizable-panels": "^2.1.5",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slider": "^1.1.1",
@@ -70,7 +70,7 @@
     "tailwind-merge": "^2.5.2",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.7",
-    "undici": "^6.28.0",
+    "undici": "^6.28.1",
     "vaul": "^1.1.1",
     "zod": "^3.23.8"
   },
