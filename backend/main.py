@@ -22,6 +22,41 @@ app = FastAPI(
     version="1.1.0",
 )
 
+# --- SSRF / DNS-rebinding hardening -----------------------------------------
+# assert_public_target() below validates a hostname's resolved IPs *once*,
+# up front. But `requests.get()` and `socket.create_connection()` each do
+# their OWN, separate DNS lookup a moment later when they actually open the
+# connection. That gap is exactly what a DNS-rebinding attack exploits: the
+# attacker's DNS server returns a public IP for the check, then a
+# private/internal IP moments later for the real connect.
+#
+# We close this the same way lib/fetch-guard.cjs / lib/security.ts do on the
+# Node side: monkeypatch the process-wide DNS resolver so every resolution
+# made anywhere in this process — including the second one `requests`/
+# `socket` perform internally — is filtered to public addresses only. This
+# is patched once at import time (not per-request), so it's safe under
+# uvicorn's threaded request handling with no risk of one request's
+# patch/unpatch racing another's.
+_real_getaddrinfo = socket.getaddrinfo
+
+
+def _public_only_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+    results = _real_getaddrinfo(host, port, family, type, proto, flags)
+    safe = []
+    for result in results:
+        try:
+            if ipaddress.ip_address(result[4][0].split('%')[0]).is_global:
+                safe.append(result)
+        except ValueError:
+            continue
+    if not safe:
+        raise socket.gaierror(f"No public address available for host {host!r}")
+    return safe
+
+
+socket.getaddrinfo = _public_only_getaddrinfo
+# -----------------------------------------------------------------------------
+
 frontend_origin = os.getenv("FRONTEND_ORIGIN", "https://webshield-zpv1.onrender.com").rstrip("/")
 app.add_middleware(
     CORSMiddleware,

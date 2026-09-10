@@ -1,7 +1,18 @@
-import { createHmac } from 'crypto';
+import { createHmac, timingSafeEqual } from 'crypto';
 
 export const AUTH_COOKIE = 'hardenhq_admin';
 const SESSION_TTL_SECONDS = 8 * 60 * 60;
+
+// Constant-time string comparison. Plain `===`/`!==` short-circuits on the
+// first differing character, which leaks how many leading characters were
+// correct via response timing. Used for the admin username/password check
+// in the login route, on top of the byte-length check below (a coarse leak
+// that's normal and accepted practice for credential comparisons).
+export function secureEqual(a: string, b: string): boolean {
+  const aBuf = Buffer.from(a);
+  const bBuf = Buffer.from(b);
+  return aBuf.length === bBuf.length && timingSafeEqual(aBuf, bBuf);
+}
 
 function getSecret(): string | null {
   const username = process.env.ADMIN_USERNAME;
