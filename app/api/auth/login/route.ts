@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit } from '@/lib/rate-limit';
-import { AUTH_COOKIE, createSessionToken, getSessionCookieOptions } from '@/lib/auth';
+import { AUTH_COOKIE, createSessionToken, getSessionCookieOptions, secureEqual } from '@/lib/auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const inputUsername = body && typeof body === 'object' && 'username' in body && typeof body.username === 'string' ? body.username : '';
   const inputPassword = body && typeof body === 'object' && 'password' in body && typeof body.password === 'string' ? body.password : '';
 
-  if (!username || !password || inputUsername !== username || inputPassword !== password) {
+  if (!username || !password || !secureEqual(inputUsername, username) || !secureEqual(inputPassword, password)) {
     return NextResponse.json({ detail: 'Invalid username or password.' }, { status: 401 });
   }
 
