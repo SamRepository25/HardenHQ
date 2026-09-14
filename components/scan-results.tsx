@@ -82,7 +82,7 @@ export function ScanResults({ result, onRescan, onNewScan }: ScanResultsProps) {
   const handleExportReport = () => {
     try {
       exportPdfReport(result);
-      toast({ title: 'PDF exported', description: 'Branded WebShield security report downloaded as PDF.' });
+      toast({ title: 'PDF exported', description: 'Branded HardenHQ security report downloaded as PDF.' });
     } catch {
       toast({ title: 'PDF export failed', description: 'Could not generate the security report.', variant: 'destructive' });
     }
