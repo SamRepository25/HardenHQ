@@ -3,10 +3,6 @@ import { Shield, Github, Linkedin } from 'lucide-react';
 
 const footerLinks = {
   Product: [
-    // Home-anchored ('/#features') rather than bare ('#features') so
-    // these still work from other pages like /about — a bare hash link
-    // only scrolls if you're already on the homepage; anywhere else it's
-    // a dead link.
     { label: 'Features', href: '/#features' },
     { label: 'How It Works', href: '/#how-it-works' },
     { label: 'Scan', href: '/#scanner' },
@@ -19,7 +15,8 @@ const footerLinks = {
   Company: [
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
-    { label: 'Privacy', href: '/privacy' },
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms and Conditions', href: '/terms' },
   ],
 };
 
@@ -43,27 +40,15 @@ export function Footer() {
               your web presence in seconds.
             </p>
             <div className="mt-4 flex gap-3">
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
-                aria-label="GitHub"
-              >
+              <a href="#" className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary" aria-label="GitHub">
                 <Github className="h-4 w-4" />
               </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
-                aria-label="X"
-              >
+              <a href="#" className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary" aria-label="X">
                 <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.964 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.964 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
                 </svg>
               </a>
-              <a
-                href="#"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
-                aria-label="LinkedIn"
-              >
+              <a href="#" className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary" aria-label="LinkedIn">
                 <Linkedin className="h-4 w-4" />
               </a>
             </div>
@@ -75,21 +60,9 @@ export function Footer() {
               <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
-                    {link.href.startsWith('/') ? (
-                      <Link
-                        href={link.href}
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {link.label}
-                      </Link>
-                    ) : (
-                      <a
-                        href={link.href}
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                      >
-                        {link.label}
-                      </a>
-                    )}
+                    <Link href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -98,12 +71,8 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
-          <p className="text-xs text-muted-foreground">
-            &copy; 2026 HardenHQ. All rights reserved.
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Built with security in mind. Powered by real-time header analysis.
-          </p>
+          <p className="text-xs text-muted-foreground">&copy; 2026 HardenHQ. All rights reserved.</p>
+          <p className="text-xs text-muted-foreground">Built with security in mind. Powered by real-time header analysis.</p>
         </div>
       </div>
     </footer>
